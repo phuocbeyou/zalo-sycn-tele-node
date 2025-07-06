@@ -4,11 +4,16 @@ import cors from "cors" // Import the cors middleware
 import { Zalo } from "zca-js" // Assuming zca-js is installed
 import { getShortGroupList } from "./zaloHelper.js" // Assuming zaloHelper.js exists
 import { Reactions } from "zca-js";
+import { sendTelegramAlert } from "./bot.js"
 
 const app = express()
 const PORT = 3000
 const COOKIE_PATH = "./cookie.json"
 const GROUP_SELECTED_PATH = "./group-selected.json" // New constant for selected groups file
+
+// kênh telegram
+const GROUP_ERROR = "-4951316498"
+const GROUP_MAIN = "-1002770234378"
 
 let zaloApi = null
 let zalo = null
@@ -40,7 +45,7 @@ async function initZalo(cookie) {
 
         const threadId = message?.threadId
         const type = message?.type
-        const { msgId, cliMsgId, idTo } = message.data;
+        const { msgId, cliMsgId, idTo,dName,content } = message.data;
         
         const addReactionDestination = {
             data: { msgId, cliMsgId },
@@ -54,12 +59,21 @@ async function initZalo(cookie) {
             return
           }
 
-        zaloApi.addReaction(Reactions.LIKE, addReactionDestination)
-                .then(console.log).catch(console.error);
+          zaloApi.addReaction(Reactions.HEART, addReactionDestination)
+          .then(() => {
+            sendTelegramAlert(content,GROUP_MAIN);
+          })
+          .catch(console.error);
+        
     });
     zaloApi.listener.start()
     console.log("✅ Zalo đã sẵn sàng")
   } catch (err) {
+    sendTelegramAlert({
+      type: "error",
+      title: `Gửi từ hệ thống`,
+      content: 'cookie đã hết hạn hãy đăng nhập lại',
+    },GROUP_ERROR);
     console.error("❌ Không thể khởi tạo Zalo:", err)
   }
 }
@@ -76,6 +90,11 @@ function watchCookieFile() {
         await initZalo(newCookie)
       }
     } catch (err) {
+      sendTelegramAlert({
+        type: "error",
+        title: `Gửi từ hệ thống`,
+        content: 'cookie không hợp lệ',
+      },GROUP_ERROR);
       console.error("❌ Lỗi khi đọc cookie:", err)
     }
   })
@@ -181,6 +200,11 @@ app.listen(PORT, async () => {
     await initZalo(JSON.parse(rawCookie))
     watchCookieFile() // Bắt đầu theo dõi cookie.json
   } catch (err) {
+    sendTelegramAlert({
+      type: "error",
+      title: `Gửi từ hệ thống`,
+      content: 'Không thể khởi động do lỗi cookie',
+    },GROUP_ERROR);
     console.error("❌ Không thể khởi động do lỗi cookie:", err)
   }
 

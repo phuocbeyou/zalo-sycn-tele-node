@@ -1,7 +1,7 @@
 [
     {
         "domain": ".zalo.me",
-        "expirationDate": 1751470306.419876,
+        "expirationDate": 1751556848.696345,
         "hostOnly": false,
         "httpOnly": false,
         "name": "_zlang",
@@ -27,20 +27,7 @@
     },
     {
         "domain": ".zalo.me",
-        "expirationDate": 1751470152,
-        "hostOnly": false,
-        "httpOnly": false,
-        "name": "_gid",
-        "path": "/",
-        "sameSite": "unspecified",
-        "secure": false,
-        "session": false,
-        "storeId": "0",
-        "value": "GA1.2.806926753.1751335748"
-    },
-    {
-        "domain": ".zalo.me",
-        "expirationDate": 1785943911.318876,
+        "expirationDate": 1786030454.911345,
         "hostOnly": false,
         "httpOnly": false,
         "name": "__zi",
@@ -53,7 +40,7 @@
     },
     {
         "domain": ".zalo.me",
-        "expirationDate": 1785943911.319876,
+        "expirationDate": 1786030454.911345,
         "hostOnly": false,
         "httpOnly": false,
         "name": "__zi-legacy",
@@ -79,7 +66,7 @@
     },
     {
         "domain": ".zalo.me",
-        "expirationDate": 1751556713.862876,
+        "expirationDate": 1751643255.744345,
         "hostOnly": false,
         "httpOnly": true,
         "name": "app.event.zalo.me",
@@ -105,7 +92,7 @@
     },
     {
         "domain": ".chat.zalo.me",
-        "expirationDate": 1751988580.748961,
+        "expirationDate": 1752075197.051345,
         "hostOnly": false,
         "httpOnly": true,
         "name": "zpw_sek",
